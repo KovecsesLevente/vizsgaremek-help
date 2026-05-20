@@ -1,0 +1,28 @@
+[root@linuxhelp:~#] sudo apt-get update
+[root@linuxhelp:~#] sudo apt-get install apache2 apache2-utils -y
+[root@linuxhelp:~#] sudo htpasswd -c /etc/apache2/.htpasswd user1
+[root@linuxhelp:~#] sudo htpasswd /etc/apache2/.htpasswd another_user2
+[root@linuxhelp:~#] nano /etc/apache2/sites-enabled/000-default.conf
+
+<Directory "/var/www/html"> 
+      AuthType Basic
+      AuthName " Restricted Content" 
+      AuthUserFile /etc/apache2/.htpasswd
+      Require valid-user
+</Directory>
+
+[root@linuxhelp:~#] systemctl restart apache2
+[root@linuxhelp:~#] nano /etc/apache2/apache2.conf
+
+ 	Options Indexes FollowSymLinks
+	AllowOverride All
+  	Require all granted
+
+[root@linuxhelp:~#]nano /var/www/html/.htaccess
+
+	AuthType Basic
+	AuthName " Restricted Content" 
+	AuthUserFile /etc/apache2/.htpasswd
+	Require valid-user
+
+[root@linuxhelp:~#] systemctl restart apache2

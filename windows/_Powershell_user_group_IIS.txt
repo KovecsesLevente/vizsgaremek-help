@@ -1,0 +1,40 @@
+Path "OU=Reál,OU=Tanárok,DC=vizsga25,DC=jedlik"
+
+OU:
+New-ADOrganizationalUnit -Name "Reál" -Path "OU=Tanárok,DC=vizsga25,DC=jedlik"
+
+user:
+New-ADUser -Name "Erős Elek" `
+           -GivenName "Elek" `
+           -Surname "Erős" `
+           -SamAccountName "eros.elek" `
+           -UserPrincipalName "eros.elek@vizsga25.jedlik" `
+           -Path "OU=Hallgatók,DC=vizsga25,DC=jedlik" `
+           -AccountPassword (ConvertTo-SecureString "Password1234" -AsPlainText -Force) `
+           -ChangePasswordAtLogon $false `
+           -Enabled $true `
+           -Title "Sales Manager" `
+           -Department "Sales" `
+           -Company "Acme Corp" `
+           -EmailAddress "eros.elek@vizsga25.jedlik"
+
+
+
+
+New-ADGroup -Name "Nappali képzés" `
+            -SamAccountName "Nappali képzés" `
+            -GroupScope Global `
+            -GroupCategory Security `
+            -Path "OU=Hallgatók,DC=vizsga25,DC=jedlik" `
+            -Description "Provides read-only access to the Sales file shares."
+
+Group category: `Distribution` or `Security` 
+Group scope: `DomainLocal` or `Global` or `Universal`
+
+
+Add-ADGroupMember -Identity "Igazgatóság" -Members "vezetekes.valer"
+
+IIS:
+Install-WindowsFeature -Name Web-Server -IncludeManagementTools
+check:
+Get-WindowsFeature -Name Web-Server

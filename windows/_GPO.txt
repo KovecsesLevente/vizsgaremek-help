@@ -1,0 +1,48 @@
+GPO:
+
+Csomagtelepítés:
+.msi file-b belerakni egy folderbe, amit share-el everyone-nak adunk Read permissiont, majd a shared path-et írjuk be a GPO beállításba
+
+Háttérkép módosításának tiltása:
+User Configuration ➔ Policies ➔ Administrative Templates ➔ Control Panel ➔ Personalization ➔ Prevent changing desktop background
+
+Specifikus háttérkép beállítása:
+User Configuration ➔ Policies ➔ Administrative Templates ➔ Desktop ➔ Desktop ➔ Desktop Wallpaper
+
+CTRL+ALT+DEL
+Computer Configuration ➔ Policies ➔ Windows Settings ➔ Security Settings ➔ Local Policies ➔ Security Options ➔ Interactive logon: Do not require CTRL+ALT+DEL
+
+Password / Jelszó
+Computer Configuration ➔ Policies ➔ Windows Settings ➔ Security Settings ➔ Account Policies ➔ Password Policy
+
+gpupdate /force
+
+
+
+
+### Hatókör korlátozása a két csoportra (Security Filtering)
+
+Ahhoz, hogy a házirend _csak_ a "Nappali képzés" és "Esti képzés" csoportok tagjaira lépjen életbe, a GPO **Biztonsági szűrését** (Security Filtering) kell módosítanod.
+
+1. Nyisd meg a **Group Policy Management** konzolt.
+    
+2. Kattints a létrehozott GPO nevére a fában.
+    
+3. A jobb oldali panelen válaszd a **Scope** (Hatókör) fület.
+    
+4. Keresd meg alul a **Security Filtering** (Biztonsági szűrés) részt.
+    
+5. Jelöld ki az `Authenticated Users` (Hitelesített felhasználók) csoportot, és kattints a **Remove** (Eltávolítás) gombra.
+    
+6. Kattints az **Add...** (Hozzáadás) gombra, majd add hozzá a **Nappali képzés** és az **Esti képzés** csoportokat.
+    
+
+⚠️ **FONTOS lépés Windows Server 2016/2019/2022 alatt:** Mivel kivetted az _Authenticated Users_ csoportot, a kliensgépek számítógép-fiókjai alapértelmezés szerint már nem fogják tudni beolvasni a GPO-t (ami MS16-072 frissítés óta kötelező). Ahhoz, hogy a házirend működjön, a következőt kell tenned:
+
+1. Válts át a **Delegation** (Delegálás) fülre (ugyanitt a jobb oldali panelen).
+    
+2. Kattints az **Add...** gombra.
+    
+3. Add hozzá az **Authenticated Users** (vagy a _Domain Computers_) csoportot.
+    
+4. A jogosultságnál válaszd a **Read** (Olvasás) lehetőséget (Figyelem: **NE** az "Apply Group Policy"-t, csak a sima _Read_-et!). így a gépek le tudják kérdezni a házirendet, de alkalmazni csak a megjelölt két csoport tagjaira fogja a rendszer.
