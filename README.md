@@ -20,3 +20,6 @@
 # Extra help
 
 sh cdp neighbors - szomszédok listázása
+
+Linux syslog keresés
+sudo journalctl | grep -c "/dev/sda1"
