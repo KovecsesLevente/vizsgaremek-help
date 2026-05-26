@@ -23,3 +23,8 @@ sh cdp neighbors - szomszédok listázása
 
 Linux syslog keresés
 sudo journalctl | grep -c "/dev/sda1"
+
+# Email providers
+mail.yahoo.com
+outlook.com
+https://account.proton.me/mail/signup?plan=free
