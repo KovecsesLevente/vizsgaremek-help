@@ -28,3 +28,4 @@ sudo journalctl | grep -c "/dev/sda1"
 mail.yahoo.com
 outlook.com
 https://account.proton.me/mail/signup?plan=free
+mail.com
