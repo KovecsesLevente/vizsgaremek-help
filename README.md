@@ -15,3 +15,8 @@
 -AWS EC2 elkészítése  
 -Dropbox regisztráció  
 -AWS maradék  
+
+
+# Extra help
+
+sh cdp neighbors - szomszédok listázása
